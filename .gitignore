@@ -1,0 +1,22 @@
+# Solace SDK directories — SDKs, download separately
+solclient-7.33.1.1-win/
+solclient-7.33.1.1-lin/
+
+# Scratch / notes
+run cmd.txt
+CLAUDE.md
+
+# Build artifacts
+*.o
+*.obj
+a.out
+solace_consumer
+solace_consumer_debug_build
+.env
+
+# Config files with credentials — never commit these
+queueprobe.conf
+*.conf
+
+# Log output
+*.log

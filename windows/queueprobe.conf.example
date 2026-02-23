@@ -1,0 +1,46 @@
+# QueueProbe configuration file
+#
+# Usage:
+#   Copy this file to queueprobe.conf in your working directory — it will be
+#   loaded automatically on every run (no flags needed).
+#
+#   Or specify a path explicitly:
+#     QueueProbe.exe --config path\to\my.conf
+#
+# Rules:
+#   - Lines starting with # or ; are comments
+#   - Format is:  key = value
+#   - CLI arguments always override config file values
+#   - Unset keys (commented out) fall back to built-in defaults
+
+# ── Connection ──────────────────────────────────────────────────────────────
+host     = tcp://localhost:55555
+vpn      = default
+username = default
+password =
+
+# ── Queue / Topic ───────────────────────────────────────────────────────────
+# Uncomment ONE of the following sections:
+
+# --- Queue consumer (default mode) ---
+# queue = my.queue.name
+
+# --- Browse mode (non-destructive, messages stay on queue) ---
+# browse = true
+
+# --- Topic subscriber (repeatable) ---
+# topic = market/data/>
+# topic = orders/new
+
+# ── TLS / SSL ────────────────────────────────────────────────────────────────
+# certdir   = C:\certs\ca          # enables cert validation against a trust store
+# no-verify = false                 # set true to skip cert check (self-signed / dev)
+
+# ── Proxy ────────────────────────────────────────────────────────────────────
+# proxy = socks5://172.xx.0.x:1080
+# proxy = httpc://proxy.corp.com:3128
+# proxy = socks5://user:pass@proxy.corp.com:13128
+
+# ── Output ───────────────────────────────────────────────────────────────────
+# logfile  = test.log       # path to the log file
+# no-color = false                  # set true to disable ANSI colours
