@@ -181,7 +181,7 @@ vpn      = my_vpn
 username = solace-cloud-client
 password = mypassword
 queue    = q.test
-logfile  = trade.log
+logfile  = test.log
 ```
 
 For a fully commented template see [`queueprobe.conf.example`](queueprobe.conf.example) in this repo.
