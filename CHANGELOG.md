@@ -7,6 +7,29 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [v1.0.1] — 2026-02-23
+
+### Added
+
+#### Config File Support
+- **Auto-load** — if `queueprobe.conf` exists in the exe directory it is loaded automatically with no flags needed
+- **`--config <path>`** flag — explicit config file path
+- **Positional `.conf` argument** — `QueueProbe.exe myenv.conf` is treated as a config file path
+- Three-tier priority: hardcoded defaults → config file → CLI args (CLI always wins)
+- `key = value` format; full-line `#` / `;` comments and inline `[whitespace]#` comments supported
+- `queueprobe.conf.example` template added to the repo
+- `queueprobe.conf` and `*.conf` added to `.gitignore` to prevent credential leaks
+
+#### Output & Logging
+- **`--no-color` flag** — disable all ANSI colour output
+- **TTY auto-detection** — colours are automatically disabled when stdout is not a terminal (piped / redirected)
+- **Clean log file** — ANSI escape sequences are stripped before writing to the log file; log is always plain text
+- **Payload in log** — message payload (JSON or binary) is now written to the log file, not only to the terminal
+- **Message separators in log** — `+----- Message #N -----+` header and closing line written to log for easy parsing
+- **Extended message metadata** — the following fields are now logged per message: `AppMsgId`, `ReplyTo`, `CorrelationId`, `SenderId`, `ClassOfService`, `Priority`, `TTL`, `DMQEligible`
+
+---
+
 ## [v1.0.0] — 2025-02-22
 
 Initial public release of **QueueProbe** — a lightweight Solace PubSub+ message consumer written in C.
@@ -60,4 +83,5 @@ Initial public release of **QueueProbe** — a lightweight Solace PubSub+ messag
 
 ---
 
-[v1.0.0]: https://github.com/Tanendra77/QueueProbe/releases/tag/v1.0.0
+[v1.0.1]: https://github.com/Tanendra77/Solace-QueueProbe/releases/tag/v1.0.1
+[v1.0.0]: https://github.com/Tanendra77/Solace-QueueProbe/releases/tag/v1.0.0
