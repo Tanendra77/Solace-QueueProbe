@@ -31,6 +31,7 @@ linux: $(SRC)
 	$(CC) $(SRC) \
 	  -I$(SOLACE_LIN)/include \
 	  -L$(SOLACE_LIN)/lib \
+	  -DSOLCLIENT_CONST_PROPERTIES \
 	  -Wl,-rpath,'$$ORIGIN' \
 	  -lsolclient \
 	  -o $(OUT_LIN)
