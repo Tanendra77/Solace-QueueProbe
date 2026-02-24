@@ -1,8 +1,8 @@
 <pre align="center">
   ██████╗ ██╗   ██╗███████╗██╗   ██╗███████╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
  ██╔═══██╗██║   ██║██╔════╝██║   ██║██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
- ██║   ██║██║   ██║█████╗  ██║   ██║█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗  
- ██║▄▄ ██║██║   ██║██╔══╝  ██║   ██║██╔══╝  ██╔═══╝ ██╔══██╗██║   ██║██╔══██╗██╔══╝  
+ ██║   ██║██║   ██║█████╗  ██║   ██║█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗
+ ██║▄▄ ██║██║   ██║██╔══╝  ██║   ██║██╔══╝  ██╔═══╝ ██╔══██╗██║   ██║██╔══██╗██╔══╝
  ╚██████╔╝╚██████╔╝███████╗╚██████╔╝███████╗██║     ██║  ██║╚██████╔╝██████╔╝███████╗
   ╚══▀▀═╝  ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
 </pre>
@@ -10,6 +10,7 @@
 [![Version](https://img.shields.io/badge/version-v1.0.1-brightgreen)](CHANGELOG.md)
 [![Language](https://img.shields.io/badge/Language-C-blue)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform](https://img.shields.io/badge/Platform-Windows%2064--bit-0078D4?logo=windows)](https://www.microsoft.com/windows)
+[![Platform](https://img.shields.io/badge/Platform-Linux%2064--bit-FCC624?logo=linux&logoColor=black)](LINUX_BUILD.md)
 [![Solace C SDK](https://img.shields.io/badge/Solace%20C%20SDK-7.33.1.1-green)](https://solace.com/downloads/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellow.svg)](LICENSE)
 [![TLS](https://img.shields.io/badge/TLS-OpenSSL%203.x-red)](https://www.openssl.org/)
@@ -18,21 +19,27 @@
 
 A lightweight Solace PubSub+ message consumer written in C. Supports **queue consuming**, **queue browsing**, and **topic subscribing** — all with colour-coded output, JSON pretty-printing, SSL/TLS, and SOCKS5/HTTP-Connect proxy support.
 
-Pre-compiled Windows 64-bit binary included — no SDK install needed.
+Pre-compiled binaries for **Windows** and **Linux** (64-bit) included — no SDK install needed.
 
 Built with inspiration from the formatting logic found in [solace-pretty-dump](https://github.com/SolaceLabs/solace-pretty-dump).
+
+---
+
+> **[📦 Plug & Play — Download pre-compiled binary](#quick-start)**  &nbsp;|&nbsp;  **[🔧 Build from Source](#building-from-source)**
 
 ---
 
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [Quick Start](#quick-start)
+  - [Windows](#quick-start-windows)
+  - [Linux](#quick-start-linux)
 - [Features](#features)
   - [Messaging Modes](#messaging-modes)
   - [Connectivity](#connectivity)
   - [Output \& Logging](#output--logging)
   - [Configuration](#configuration)
-- [Quick Start (Windows)](#quick-start-windows)
 - [Modes](#modes)
   - [Queue Consumer *(default)*](#queue-consumer-default)
   - [Browse Mode (`--browse`)](#browse-mode---browse)
@@ -43,8 +50,8 @@ Built with inspiration from the formatting logic found in [solace-pretty-dump](h
 - [Proxy Support](#proxy-support)
 - [Building from Source](#building-from-source)
   - [Prerequisites](#prerequisites)
-  - [Linux](#linux)
   - [Windows (MinGW/MSYS2 UCRT64)](#windows-mingwmsys2-ucrt64)
+  - [Linux](#linux-1)
 - [How It Works](#how-it-works)
 - [Files](#files)
 - [Dependencies](#dependencies)
@@ -52,39 +59,15 @@ Built with inspiration from the formatting logic found in [solace-pretty-dump](h
 
 ---
 
-## Features
+## Quick Start
 
-### Messaging Modes
-- **Queue Consumer** — binds to a durable queue and consumes with explicit client ACK; messages are removed after delivery
-- **Browse Mode** (`--browse`) — inspect queue contents non-destructively; messages remain on the queue
-- **Topic Subscriber** (`--topic`) — session-level direct topic subscriptions; flag is repeatable for multiple topics
+Download the latest release for your platform from the **[Releases](../../releases/latest)** page — all required libraries are bundled, no SDK install needed.
 
-### Connectivity
-- **SSL/TLS** (`tcps://`) — full TLS transport via OpenSSL 3.x; DLLs bundled, no separate install needed
-- **SOCKS5 / HTTP-Connect proxy** (`--proxy`) — tunnel the Solace connection through a proxy
-- **Certificate validation** (`--certdir`) — point at a trust-store directory for production cert checking; `--no-verify` to skip for dev/self-signed certs
+### Quick Start (Windows)
 
-### Output & Logging
-- **ANSI colour-coded log levels** (INFO / WARN / ERROR / DEBUG) with millisecond-precision timestamps
-- **JSON auto-detection** — payloads that are valid JSON are automatically pretty-printed with syntax highlighting
-- **Clean log file** — ANSI colour codes are stripped automatically; log file is always plain text even when colour is on in the terminal
-- **Rich message metadata** — AppMsgId, ReplyTo, CorrelationId, SenderId, DeliveryMode, ClassOfService, Priority, TTL, DMQEligible logged per message
-- **TTY auto-detection** — colours are automatically disabled when output is piped or redirected
-
-### Configuration
-- **Config file** (`queueprobe.conf`) — store all settings in a `key = value` file; auto-loaded from the exe directory with no extra flags
-- **Flexible config loading** — pass `--config <path>` for an explicit path, or use a positional `.conf` argument (`QueueProbe.exe myenv.conf`)
-- **CLI always wins** — any command-line flag overrides the config file value
-- **Inline comments** — config values support `# comment` suffix (e.g. `logfile = out.log  # daily log`)
-
----
-
-## Quick Start (Windows)
-
-All required DLLs are bundled in the `windows/` folder. No installation needed.
+Extract `QueueProbe-vX.Y.Z-windows-x64.zip` and run from the extracted folder:
 
 ```cmd
-cd windows
 QueueProbe.exe <queue_name> --host tcp://<broker>:<port> --vpn <vpn> --username <user> --password <pass>
 ```
 
@@ -103,11 +86,72 @@ QueueProbe.exe q.test --host tcps://mr-connection-xxx.messaging.solace.cloud:554
 QueueProbe.exe q.test --host tcp://broker.example.com:55555 --vpn my_vpn --username user --password pass --proxy "socks5://proxy.example.com:1080"
 ```
 
-> **TLS note:** For `tcps://` connections, `libcrypto-3.dll` and `libssl-3.dll` must be present in the `windows/` folder alongside the exe. They are already included in this repo.
+> **TLS note:** `libcrypto-3.dll` and `libssl-3.dll` are bundled — no separate OpenSSL install needed.
+
+---
+
+### Quick Start (Linux)
+
+Extract `QueueProbe-vX.Y.Z-linux-x64.tar.gz` and run from the extracted folder:
+
+```bash
+tar -xzf QueueProbe-vX.Y.Z-linux-x64.tar.gz
+cd QueueProbe-vX.Y.Z-linux-x64
+chmod +x QueueProbe
+./QueueProbe <queue_name> --host tcp://<broker>:<port> --vpn <vpn> --username <user> --password <pass>
+```
+
+**Example — queue consumer (plain TCP):**
+```bash
+./QueueProbe q.test --host tcp://broker.example.com:55555 --vpn my_vpn --username user --password pass
+```
+
+**Example — queue consumer (TLS):**
+```bash
+./QueueProbe q.test --host tcps://mr-connection-xxx.messaging.solace.cloud:55443 --vpn my_vpn --username solace-cloud-client --password mypassword
+```
+
+**Example — via SOCKS5 proxy:**
+```bash
+./QueueProbe q.test --host tcp://broker.example.com:55555 --vpn my_vpn --username user --password pass --proxy "socks5://proxy.example.com:1080"
+```
+
+> **`libsolclient.so` is bundled** in the tar.gz. The binary uses `rpath=$ORIGIN` so it loads the library from its own directory automatically — no `LD_LIBRARY_PATH` export or root access needed.
+>
+> OpenSSL is **not** bundled — it comes pre-installed on any modern Linux distro (`libssl`, `libcrypto`).
+
+---
+
+## Features
+
+### Messaging Modes
+- **Queue Consumer** — binds to a durable queue and consumes with explicit client ACK; messages are removed after delivery
+- **Browse Mode** (`--browse`) — inspect queue contents non-destructively; messages remain on the queue
+- **Topic Subscriber** (`--topic`) — session-level direct topic subscriptions; flag is repeatable for multiple topics
+
+### Connectivity
+- **SSL/TLS** (`tcps://`) — full TLS transport via OpenSSL; bundled on Windows, system-provided on Linux
+- **SOCKS5 / HTTP-Connect proxy** (`--proxy`) — tunnel the Solace connection through a proxy
+- **Certificate validation** (`--certdir`) — point at a trust-store directory for production cert checking; `--no-verify` to skip for dev/self-signed certs
+
+### Output & Logging
+- **ANSI colour-coded log levels** (INFO / WARN / ERROR / DEBUG) with millisecond-precision timestamps
+- **JSON auto-detection** — payloads that are valid JSON are automatically pretty-printed with syntax highlighting
+- **Clean log file** — ANSI colour codes are stripped automatically; log file is always plain text even when colour is on in the terminal
+- **Rich message metadata** — AppMsgId, ReplyTo, CorrelationId, SenderId, DeliveryMode, ClassOfService, Priority, TTL, DMQEligible logged per message
+- **TTY auto-detection** — colours are automatically disabled when output is piped or redirected
+
+### Configuration
+- **Config file** (`queueprobe.conf`) — store all settings in a `key = value` file; auto-loaded from the binary's directory with no extra flags
+- **Flexible config loading** — pass `--config <path>` for an explicit path, or use a positional `.conf` argument
+- **CLI always wins** — any command-line flag overrides the config file value
+- **Inline comments** — config values support `# comment` suffix (e.g. `logfile = out.log  # daily log`)
 
 ---
 
 ## Modes
+
+> On Linux replace `QueueProbe.exe` with `./QueueProbe` in all examples below.
 
 ### Queue Consumer *(default)*
 
@@ -159,16 +203,15 @@ QueueProbe.exe --topic "market/data/>" --topic "orders/new" [options]
 
 For repeated use, store all settings in a plain-text `key = value` file instead of typing flags every time.
 
-**Auto-load** — place a file named `queueprobe.conf` in the same directory as the exe. It is loaded automatically with no extra flags needed:
-
-```cmd
-cd windows
-QueueProbe.exe          ← reads queueprobe.conf automatically
-```
+**Auto-load** — place a file named `queueprobe.conf` in the same directory as the binary. It is loaded automatically with no extra flags needed.
 
 **Explicit path:**
-```cmd
+```bash
+# Windows
 QueueProbe.exe --config C:\configs\prod.conf
+
+# Linux
+./QueueProbe --config /etc/queueprobe/prod.conf
 ```
 
 **CLI args always win** — any flag passed on the command line overrides the config file.
@@ -184,7 +227,7 @@ queue    = q.test
 logfile  = test.log
 ```
 
-For a fully commented template see [`queueprobe.conf.example`](queueprobe.conf.example) in this repo.
+For a fully commented template see [`queueprobe.conf.example`](windows/queueprobe.conf.example) in this repo.
 
 > **Security:** `queueprobe.conf` is listed in `.gitignore` — it will never be accidentally committed since it typically contains credentials.
 
@@ -192,19 +235,23 @@ For a fully commented template see [`queueprobe.conf.example`](queueprobe.conf.e
 
 ## TLS / SSL
 
-For `tcps://` connections, the Solace SDK loads OpenSSL at runtime from the exe's directory.
-
 **With certificate validation (recommended for production):**
-```cmd
+```bash
+# Windows
 QueueProbe.exe q.test --host tcps://broker:55443 --vpn vpn1 --username user --password pass --certdir C:\certs\ca
+
+# Linux
+./QueueProbe q.test --host tcps://broker:55443 --vpn vpn1 --username user --password pass --certdir /etc/ssl/certs
 ```
 
 **Without certificate validation (useful for self-signed certs / dev):**
-```cmd
+```bash
 QueueProbe.exe q.test --host tcps://broker:55443 --vpn vpn1 --username user --password pass --no-verify
 ```
 
 > By default, SSL certificate validation is **disabled**. Use `--certdir` to enable it for production.
+>
+> On Windows, `libcrypto-3.dll` and `libssl-3.dll` are bundled alongside the binary. On Linux, the Solace SDK uses the system OpenSSL — no extra files needed.
 
 ---
 
@@ -224,28 +271,11 @@ Internally the SDK's `host%proxy` notation is used — the proxy URL is appended
 
 ## Building from Source
 
+> See [LINUX_BUILD.md](LINUX_BUILD.md) for a detailed step-by-step Linux build guide.
+
 ### Prerequisites
 
-Download the [Solace C API](https://solace.com/downloads/) for your platform and extract it.
-
-### Linux
-
-```bash
-export SOLACE_HOME=/path/to/solclient-7.33.1.1
-export LD_LIBRARY_PATH=$SOLACE_HOME/lib:$LD_LIBRARY_PATH
-
-# Production binary
-gcc src/solace_queue_consumer_proxy.c \
-  -I$SOLACE_HOME/include \
-  -L$SOLACE_HOME/lib \
-  -lsolclient -o solace_consumer
-
-# Debug binary
-gcc src/solace_consumer_debug.c \
-  -I$SOLACE_HOME/include \
-  -L$SOLACE_HOME/lib \
-  -lsolclient -o solace_consumer_debug
-```
+Download the [Solace C API](https://solace.com/downloads/) for your platform and extract it alongside the repo root.
 
 ### Windows (MinGW/MSYS2 UCRT64)
 
@@ -259,14 +289,34 @@ gcc src/solace_consumer_debug.c \
   -o windows/QueueProbe.exe
 ```
 
-powershell:
-```bash
-gcc src/solace_consumer_debug.c -I solclient-7.33.1.1-win/include -L solclient-7.33.1.1-win/lib/Win64 -DSOLCLIENT_CONST_PROPERTIES -lsolclient -lws2_32 -static-libgcc -o windows/QueueProbe.exe
-```
-
 > **`-DSOLCLIENT_CONST_PROPERTIES`** is required — without it the SDK typedef resolves to `char**` instead of `const char**`, causing compile errors on property arrays.
 >
 > **`-static-libgcc`** embeds the GCC runtime so the exe only needs `libsolclient.dll` plus the Windows UCRT (built into Windows 10+).
+
+### Linux
+
+```bash
+export SOLACE_HOME=/path/to/solclient-7.33.1.1
+
+gcc src/solace_consumer_debug.c \
+  -I$SOLACE_HOME/include \
+  -L$SOLACE_HOME/lib \
+  -DSOLCLIENT_CONST_PROPERTIES \
+  -Wl,-rpath,'$ORIGIN' \
+  -lsolclient \
+  -o linux/QueueProbe
+
+# Bundle the Solace library for a self-contained folder
+cp $SOLACE_HOME/lib/libsolclient.so* linux/
+```
+
+> **`-Wl,-rpath,'$ORIGIN'`** makes the binary look for `.so` files in its own directory at runtime — same behaviour as Windows DLLs placed next to an `.exe`. No `LD_LIBRARY_PATH` needed by end users.
+
+Or use the Makefile (from the `src/` directory):
+
+```bash
+SOLACE_HOME=/path/to/solclient-7.33.1.1 make linux
+```
 
 ---
 
@@ -290,36 +340,33 @@ The consumer follows the standard Solace C API lifecycle:
 
 ```
 ├── src/
-│   ├── solace_queue_consumer_proxy.c   # Production consumer (minimal output)
-│   └── solace_consumer_debug.c         # Debug consumer (colour logs + JSON pretty-print)
+│   └── solace_consumer_debug.c     # Single source file (Windows + Linux)
 ├── windows/
-│   ├── QueueProbe.exe                  # Pre-compiled Windows 64-bit binary
-│   ├── libsolclient.dll                # Solace client library
-│   ├── libsolclient_d.dll              # Solace client library (debug build)
-│   ├── libcrypto-3.dll                 # OpenSSL — required for tcps://
-│   └── libssl-3.dll                    # OpenSSL — required for tcps://
-├── queueprobe.conf.example     # Config file template
+│   ├── QueueProbe.exe              # Pre-compiled Windows 64-bit binary
+│   ├── libsolclient.dll            # Solace client library
+│   ├── libcrypto-3.dll             # OpenSSL — required for tcps://
+│   ├── libssl-3.dll                # OpenSSL — required for tcps://
+│   └── queueprobe.conf.example     # Config file template
+├── linux/
+│   ├── QueueProbe                  # Pre-compiled Linux 64-bit binary
+│   ├── libsolclient.so             # Solace client library (symlink)
+│   └── libsolclient.so.1.7.33.1.1 # Solace client library (versioned)
+├── .github/workflows/release.yml  # Automated release workflow
+├── LINUX_BUILD.md                  # Linux build guide
 ├── CHANGELOG.md
 ├── LICENSE
 └── README.md
 ```
 
-The debug binary adds:
-- Millisecond-precision timestamped logging
-- ANSI colour-coded log levels
-- JSON payload auto-detection and syntax-highlighted pretty-printing
-- Full session/flow event diagnostics
-- Log file output (`--logfile`)
-
 ---
 
 ## Dependencies
 
-| Library | Version | Purpose |
-|---------|---------|---------|
-| libsolclient | 7.33.1.1 | Solace PubSub+ messaging |
-| OpenSSL | 3.x | TLS transport (required for `tcps://`) |
-| Windows UCRT | Windows 10+ built-in | C runtime |
+| Library | Version | Windows | Linux |
+|---------|---------|---------|-------|
+| libsolclient | 7.33.1.1 | bundled (`libsolclient.dll`) | bundled (`libsolclient.so`) |
+| OpenSSL | 3.x | bundled (`libcrypto-3.dll`, `libssl-3.dll`) | system-provided |
+| C runtime | — | Windows UCRT (built into Windows 10+) | glibc (built into any modern distro) |
 
 ---
 
