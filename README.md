@@ -1,10 +1,10 @@
 <pre align="center">
-  ██████╗ ██╗   ██╗███████╗██╗   ██╗███████╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
- ██╔═══██╗██║   ██║██╔════╝██║   ██║██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
+    ██████╗ ██╗   ██╗███████╗██╗   ██╗███████╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
+   ██╔═══██╗██║   ██║██╔════╝██║   ██║██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
  ██║   ██║██║   ██║█████╗  ██║   ██║█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗
  ██║▄▄ ██║██║   ██║██╔══╝  ██║   ██║██╔══╝  ██╔═══╝ ██╔══██╗██║   ██║██╔══██╗██╔══╝
- ╚██████╔╝╚██████╔╝███████╗╚██████╔╝███████╗██║     ██║  ██║╚██████╔╝██████╔╝███████╗
-  ╚══▀▀═╝  ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+   ╚██████╔╝╚██████╔╝███████╗╚██████╔╝███████╗██║     ██║  ██║╚██████╔╝██████╔╝███████╗
+    ╚══▀▀═╝  ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
 </pre>
 
 [![Version](https://img.shields.io/badge/version-v1.0.1-brightgreen)](CHANGELOG.md)
@@ -33,8 +33,8 @@ Built with inspiration from the formatting logic found in [solace-pretty-dump](h
 
 - [Table of Contents](#table-of-contents)
 - [Quick Start](#quick-start)
-  - [Windows](#quick-start-windows)
-  - [Linux](#quick-start-linux)
+  - [Quick Start (Windows)](#quick-start-windows)
+  - [Quick Start (Linux)](#quick-start-linux)
 - [Features](#features)
   - [Messaging Modes](#messaging-modes)
   - [Connectivity](#connectivity)
@@ -51,7 +51,7 @@ Built with inspiration from the formatting logic found in [solace-pretty-dump](h
 - [Building from Source](#building-from-source)
   - [Prerequisites](#prerequisites)
   - [Windows (MinGW/MSYS2 UCRT64)](#windows-mingwmsys2-ucrt64)
-  - [Linux](#linux-1)
+  - [Linux](#linux)
 - [How It Works](#how-it-works)
 - [Files](#files)
 - [Dependencies](#dependencies)
