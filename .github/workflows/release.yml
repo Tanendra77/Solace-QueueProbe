@@ -1,0 +1,50 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Windows package ────────────────────────────────────────────────────
+      - name: Package Windows
+        run: |
+          mkdir -p release-windows
+          cp windows/QueueProbe.exe          release-windows/
+          cp windows/libsolclient.dll        release-windows/
+          cp windows/libcrypto-3.dll         release-windows/
+          cp windows/libssl-3.dll            release-windows/
+          cp windows/queueprobe.conf.example release-windows/
+          cd release-windows
+          zip -r ../QueueProbe-${{ github.ref_name }}-windows-x64.zip .
+
+      # ── Linux package ──────────────────────────────────────────────────────
+      - name: Package Linux
+        run: |
+          mkdir -p release-linux
+          cp linux/QueueProbe               release-linux/
+          cp linux/libsolclient.so*         release-linux/
+          cp windows/queueprobe.conf.example release-linux/
+          chmod +x release-linux/QueueProbe
+          tar -czf QueueProbe-${{ github.ref_name }}-linux-x64.tar.gz \
+            -C release-linux .
+
+      # ── GitHub Release ─────────────────────────────────────────────────────
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            QueueProbe-${{ github.ref_name }}-windows-x64.zip
+            QueueProbe-${{ github.ref_name }}-linux-x64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -18,5 +18,8 @@ solace_consumer_debug_build
 queueprobe.conf
 *.conf
 
+# Release archives
+*.zip
+
 # Log output
 *.log
